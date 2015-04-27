@@ -1,23 +1,8 @@
-var pg = require('pg'),
-    DATABASE_URL = process.env.DATABASE_URL;
-
 function extractTags(row) {
   return row.tag;
 };
 
-function query(queryString, params, formatResponse) {
-  pg.connect(DATABASE_URL, function(err, client, done) {
-    client.query(queryString, params, function(error, result) {
-      done();
-
-      if (err) {
-        console.error(error); response.send('Error: ' + error);
-      } else {
-        formatResponse(result);
-      }
-    });
-  });
-}
+var query = require('./query');
 
 module.exports = {
   getTags: function(username, response) {
@@ -30,7 +15,11 @@ module.exports = {
   },
 
   addTag: function(username, tag, response) {
-    query('INSERT INTO user_tags VALUES ($1, $2);', [username, tag], function(result) {
+    var queryString = 'INSERT INTO user_tags (username, tag) ' +
+          'SELECT $1, $2 ' +
+          'WHERE NOT EXISTS (SELECT * FROM user_tags WHERE username=$1 AND tag=$2);'
+
+    query(queryString, [username, tag], function(result) {
       response.sendStatus(200);
     });
   },
