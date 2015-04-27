@@ -4,15 +4,12 @@ var pg = require('pg'),
 module.exports = {
   getTags: function(username, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('select tag from user_tags where username=\'$1\';', [username], function(error, result) {
+      client.query('SELECT * FROM user_tags WHERE username=$1;', [username], function(error, result) {
         done();
-
-        result = result || {};
 
         if (err) {
           console.error(error); response.send(error);
         } else {
-          console.log('result:', result);
           response.send(result.rows);
         }
       });
@@ -21,15 +18,12 @@ module.exports = {
 
   hasTag: function(username, tag, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('select tag from user_tags where username=\'$1\'and tag=\'$2\';', [username, tag], function(error, result) {
+      client.query('SELECT * FROM user_tags WHERE username=$1 AND tag=$2;', [username, tag], function(error, result) {
         done();
-
-        result = result || {};
 
         if (err) {
           console.error(error); response.send(error);
         } else {
-          console.log('result:', result);
           response.send(result.rows);
         }
       });
@@ -38,7 +32,7 @@ module.exports = {
 
   addTag: function(username, tag, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('insert into user_tags values (\'$1\', \'$2\')', [username, tag], function(error, result) {
+      client.query('INSERT INTO user_tags VALUES ($1, $2);', [username, tag], function(error, result) {
         done();
         if (err) {
           console.error(error); response.send(error);
@@ -49,9 +43,9 @@ module.exports = {
     });
   },
 
-  removeTag: function(username, tag) {
+  removeTag: function(username, tag, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('delete from user_tags where username=\'$1\' and tag=\'$2\';', [username, tag], function(error, result) {
+      client.query('DELETE FROM user_tags WHERE username=$1 AND tag=$2;', [username, tag], function(error, result) {
         done();
         if (err) {
           console.error(error); response.send(error);
