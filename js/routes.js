@@ -13,7 +13,7 @@ module.exports = function(app) {
     var username = request.params.username,
         tag = request.params.tag;
 
-    response.send(sse.hasTag(username, tag));
+    sse.hasTag(username, tag);
   });
 
   app.put('/api/:username/:tag', function(request, response) {
@@ -21,8 +21,6 @@ module.exports = function(app) {
         tag = request.params.tag;
 
     sse.addTag(username, tag);
-
-    response.sendStatus(200);
   });
 
   app.delete('/api/:username/:tag', function(request, response) {
@@ -30,7 +28,5 @@ module.exports = function(app) {
         tag = request.params.tag;
 
     sse.removeTag(username, tag);
-
-    response.sendStatus(200);
   });
 };
