@@ -5,4 +5,4 @@ var setupRoutes = require('./js/routes');
 
 setupRoutes(app);
 
-app.listen(port)
+app.listen(port);
