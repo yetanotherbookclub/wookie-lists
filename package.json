@@ -2,9 +2,9 @@
   "name": "massive-wookie",
   "version": "1.0.0",
   "description": "Simple service for Building Microservices workshop/book club",
-  "main": "index.js",
+  "main": " js/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node js/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
