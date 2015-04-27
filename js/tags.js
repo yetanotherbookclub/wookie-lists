@@ -1,6 +1,10 @@
 var pg = require('pg'),
     DATABASE_URL = process.env.DATABASE_URL;
 
+function extractTags(row) {
+  return row.tag;
+};
+
 module.exports = {
   getTags: function(username, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
@@ -10,21 +14,10 @@ module.exports = {
         if (err) {
           console.error(error); response.send(error);
         } else {
-          response.send(result.rows);
-        }
-      });
-    });
-  },
-
-  hasTag: function(username, tag, response) {
-    pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('SELECT * FROM user_tags WHERE username=$1 AND tag=$2;', [username, tag], function(error, result) {
-        done();
-
-        if (err) {
-          console.error(error); response.send(error);
-        } else {
-          response.send(result.rows);
+          response.send({
+            username: username,
+            tags: result.rows.map(extractTags)
+          });
         }
       });
     });
