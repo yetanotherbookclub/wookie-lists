@@ -4,7 +4,7 @@ var pg = require('pg'),
 module.exports = {
   getTags: function(username, response) {
     pg.connect(DATABASE_URL, function(err, client, done) {
-      client.query('SELECT tag FROM user_tags WHERE username=' + username, function(error, result) {
+      client.query('SELECT tag FROM user_tags WHERE username=' + username + ';', function(error, result) {
         done();
         if (err) {
           console.error(error); response.send(error);
