@@ -13,20 +13,20 @@ module.exports = function(app) {
     var username = request.params.username,
         tag = request.params.tag;
 
-    sse.hasTag(username, tag);
+    sse.hasTag(username, tag, response);
   });
 
   app.put('/api/:username/:tag', function(request, response) {
     var username = request.params.username,
         tag = request.params.tag;
 
-    sse.addTag(username, tag);
+    sse.addTag(username, tag, response);
   });
 
   app.delete('/api/:username/:tag', function(request, response) {
     var username = request.params.username,
         tag = request.params.tag;
 
-    sse.removeTag(username, tag);
+    sse.removeTag(username, tag, response);
   });
 };
