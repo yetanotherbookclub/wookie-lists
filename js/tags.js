@@ -1,14 +1,18 @@
-//simple in memory store for now
-var tags = {};
+var pg = require('pg'),
+    DATABASE_URL = process.env.DATABASE_URL;
 
 module.exports = {
-  getTags: function(username) {
-    var tagsForUser = tags[username] || {};
-
-    return {
-      user: username,
-      tags: tagsForUser
-    };
+  getTags: function(username, response) {
+    pg.connect(DATABASE_URL, function(err, client, done) {
+      client.query('SELECT tag FROM user_tags WHERE username=' + username, function(error, result) {
+        done();
+        if (err) {
+          console.error(error); response.send(error);
+        } else {
+          response.send(result ? result.rows : []);
+        }
+      });
+    });
   },
 
   hasTag: function(username, tag) {

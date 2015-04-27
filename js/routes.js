@@ -6,7 +6,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/:username', function(request, response) {
-    response.send(sse.getTags(request.params.username));
+    sse.getTags(request.params.username, response);
   });
 
   app.get('/api/:username/:tag', function(request, response) {
