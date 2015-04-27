@@ -1,0 +1,26 @@
+{
+  "name": "massive-wookie",
+  "version": "1.0.0",
+  "description": "Simple service for Building Microservices workshop/book club",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrsjxn/massive-wookie.git"
+  },
+  "author": "Chris Jackson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrsjxn/massive-wookie/issues"
+  },
+  "homepage": "https://github.com/chrsjxn/massive-wookie",
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
