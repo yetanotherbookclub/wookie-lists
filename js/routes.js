@@ -9,7 +9,7 @@ module.exports = function(app) {
     tags.getTags(request.params.username, response);
   });
 
-  app.put('/api/:username/:tag', function(request, response) {
+  app.post('/api/:username/:tag', function(request, response) {
     var username = request.params.username,
         tag = request.params.tag;
 
