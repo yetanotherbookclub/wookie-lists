@@ -5,21 +5,21 @@ module.exports = function(app) {
     response.redirect('https://github.com/chrsjxn/massive-wookie');
   });
 
-  app.get('/api/:username', function(request, response) {
-    tags.getTags(request.params.username, response);
+  app.get('/api/:name', function(request, response) {
+    tags.getTags(request.params.name, response);
   });
 
-  app.post('/api/:username/:tag', function(request, response) {
-    var username = request.params.username,
+  app.post('/api/:name/:tag', function(request, response) {
+    var name = request.params.name,
         tag = request.params.tag;
 
-    tags.addTag(username, tag, response);
+    tags.addTag(name, tag, response);
   });
 
-  app.delete('/api/:username/:tag', function(request, response) {
-    var username = request.params.username,
+  app.delete('/api/:name/:tag', function(request, response) {
+    var name = request.params.name,
         tag = request.params.tag;
 
-    tags.removeTag(username, tag, response);
+    tags.removeTag(name, tag, response);
   });
 };
