@@ -1,25 +1,26 @@
 module.exports = function(app) {
-  var tags = require('./tags');
+  app.get('/api/lists', function(request, response) {
 
-  app.get('/', function (request, response) {
-    response.redirect('https://github.com/chrsjxn/massive-wookie');
   });
 
-  app.get('/api/:name', function(request, response) {
-    tags.getTags(request.params.name, response);
+  app.post('/api/lists', function(request, response) {
+
   });
 
-  app.post('/api/:name/:tag', function(request, response) {
-    var name = request.params.name,
-        tag = request.params.tag;
+  app.get('/api/lists/:list_id', function(request, response) {
 
-    tags.addTag(name, tag, response);
   });
 
-  app.delete('/api/:name/:tag', function(request, response) {
-    var name = request.params.name,
-        tag = request.params.tag;
+  app.delete('/api/lists/:list_id', function(request, response) {
 
-    tags.removeTag(name, tag, response);
   });
+
+  app.put('/api/lists/:list_id/users/:user_id', function(request, response) {
+
+  });
+
+  app.delete('/api/lists/:list_id/users/:user_id', function(request, response) {
+
+  });
+
 };

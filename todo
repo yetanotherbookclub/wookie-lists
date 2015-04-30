@@ -1,0 +1,8 @@
+GET /api/lists -> returns all lists
+
+GET    /api/lists/:id -> return a list
+POST   /api/lists/    -> create a list
+DELETE /api/lists/:id -> delete a list
+
+PUT    /api/lists/:list_id/users/:user_id -> adds a user to a list
+DELETE /api/lists/:list_id/users/:user_id -> removes a user from a list
