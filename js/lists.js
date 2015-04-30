@@ -4,6 +4,10 @@ function extractUserIds(result) {
   return result.user_id;
 };
 
+function notNull(result) {
+  return result != null;
+}
+
 module.exports = {
   getLists: function(response) {
     query('SELECT * FROM lists', [], function(result) {
@@ -20,7 +24,7 @@ module.exports = {
       response.send({
         id: result.rows[0].id,
         name: result.rows[0].name,
-        user_ids: result.rows.map(extractUserIds)
+        user_ids: result.rows.map(extractUserIds).filter(notNull)
       });
     });
   },
