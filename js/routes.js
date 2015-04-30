@@ -1,26 +1,28 @@
+var lists = require('./lists');
+
 module.exports = function(app) {
   app.get('/api/lists', function(request, response) {
-
+    lists.getLists(response);
   });
 
-  app.post('/api/lists', function(request, response) {
-
+  app.post('/api/lists/:listName', function(request, response) {
+    lists.createList(request.params.listName, response);
   });
 
-  app.get('/api/lists/:list_id', function(request, response) {
-
+  app.get('/api/lists/:listId', function(request, response) {
+    lists.getList(request.params.listId, response);
   });
 
-  app.delete('/api/lists/:list_id', function(request, response) {
-
+  app.delete('/api/lists/:listId', function(request, response) {
+    lists.deleteList(request.params.listId, response);
   });
 
-  app.put('/api/lists/:list_id/users/:user_id', function(request, response) {
-
+  app.put('/api/lists/:listId/users/:userId', function(request, response) {
+    lists.addUser(request.params.listId, request.params.userId, response);
   });
 
-  app.delete('/api/lists/:list_id/users/:user_id', function(request, response) {
-
+  app.delete('/api/lists/:listId/users/:userId', function(request, response) {
+    lists.removeUser(request.params.listId, request.params.userId, response);
   });
 
 };

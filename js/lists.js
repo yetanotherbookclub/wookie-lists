@@ -1,31 +1,53 @@
-function extractTags(row) {
-  return row.tag;
-};
-
 var query = require('./query');
 
+function extractUserIds(result) {
+  return result.user_id;
+};
+
 module.exports = {
-  getTags: function(name, response) {
-    query('SELECT * FROM tags WHERE name=$1;', [name], function(result) {
-      response.send({
-        name: name,
-        tags: result.rows.map(extractTags)
-      })
+  getLists: function(response) {
+    query('SELECT * FROM lists', [], function(result) {
+      response.send(result.rows);
     });
   },
 
-  addTag: function(name, tag, response) {
-    var queryString = 'INSERT INTO tags (name, tag) ' +
-          'SELECT $1, $2 ' +
-          'WHERE NOT EXISTS (SELECT * FROM tags WHERE name=$1 AND tag=$2);'
+  getList: function(listId, response) {
+    var qString = 'SELECT id, name, user_id FROM lists, list_memberships '
+      + 'WHERE lists.id=$1 AND lists.id=list_memberships.list_id';
 
-    query(queryString, [name, tag], function(result) {
+    query(qString, [listId], function(result) {
+      response.send({
+        id: result.rows[0].id,
+        name: result.rows[0].name,
+        user_ids: result.rows.map(extractUserIds)
+      });
+    });
+  },
+
+  createList: function(listName, response) {
+    query('INSERT INTO lists (name) VALUES ($1) RETURNING *', [listName], function(result) {
+      response.status(201).send(result.rows[0]);
+    });
+  },
+
+  deleteList: function(listId, response) {
+    query('DELETE FROM lists WHERE id=$1', [listId], function(result) {
       response.sendStatus(200);
     });
   },
 
-  removeTag: function(name, tag, response) {
-    query('DELETE FROM tags WHERE name=$1 AND tag=$2;', [name, tag], function(result) {
+  addUser: function(listId, userId, response) {
+    var qString = 'INSERT INTO list_memberships (list_id, user_id) VALUES ($1, $2) RETURNING *';
+
+    query(qString, [listId, userId], function(result) {
+      response.send(result.rows[0]);
+    });
+  },
+
+  removeUser: function(listId, userId, response) {
+    var qString = 'DELETE FROM list_memberships WHERE list_id=$1 AND user_id=$2';
+
+    query(qString, [listId, userId], function(result) {
       response.sendStatus(200);
     });
   }
