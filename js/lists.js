@@ -12,8 +12,9 @@ module.exports = {
   },
 
   getList: function(listId, response) {
-    var qString = 'SELECT id, name, user_id FROM lists, list_memberships '
-      + 'WHERE lists.id=$1 AND lists.id=list_memberships.list_id';
+    var qString = 'SELECT id, name, user_id FROM lists LEFT OUTER JOIN list_memberships '
+      + 'ON (lists.id=list_memberships.list_id) '
+      + 'WHERE lists.id=$1';
 
     query(qString, [listId], function(result) {
       response.send({
