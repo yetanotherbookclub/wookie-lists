@@ -8,7 +8,7 @@ Simple service for Building Microservices workshop/book club
 ```
 GET /api/lists
 GET /api/lists/:listId
-POST /api/lists/:listName
+POST /api/lists/ (w/ {name: listName} json body, or URL encoded version of the same)
 DELETE /api/lists/:listId
 
 PUT /api/lists/:listId/users/:userId
