@@ -5,8 +5,8 @@ module.exports = function(app) {
     lists.getLists(response);
   });
 
-  app.post('/api/lists/:listName', function(request, response) {
-    lists.createList(request.params.listName, response);
+  app.post('/api/lists/', function(request, response) {
+    lists.createList(request.body.name, response);
   });
 
   app.get('/api/lists/:listId', function(request, response) {
