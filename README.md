@@ -1,6 +1,8 @@
 # wookie-lists
 Simple service for Building Microservices workshop/book club
 
+Deployed to heroku at http://wookie-lists.herokuapp.com
+
 (The wookie thing is because it's part of what github suggested as a repo name. Just FYI.)
 
 ## Basic API
